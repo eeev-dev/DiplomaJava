@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "910388905641",
+    "project_id": "diplomajava",
+    "storage_bucket": "diplomajava.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:910388905641:android:9e6cd97d3bec732a770bb8",
+        "android_client_info": {
+          "package_name": "com.example.diplamajava"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAbRpf7uk60PGaLW-_lOAe13CIH_T2GVqs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

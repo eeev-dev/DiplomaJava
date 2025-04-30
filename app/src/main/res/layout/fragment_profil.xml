@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ProfilFragment"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:padding="24dp"
+    android:background="@color/white">
+
+
+    <!-- TODO: Update blank fragment layout -->
+
+
+    <LinearLayout
+        android:layout_width="387dp"
+        android:layout_height="707dp"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:src="@drawable/man" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Иванов Иван Иванович"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:gravity="center"/>
+
+        <RadioGroup
+            android:id="@+id/mode_selector"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:orientation="horizontal"
+            android:gravity="center"/>
+
+        <RadioButton
+            android:id="@+id/student_mode"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="Студент"
+            android:layout_marginStart="16dp"/>
+
+        <RadioButton
+            android:id="@+id/applicant_mode"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="Абитуриент"
+            android:layout_marginStart="16dp" />
+
+    </LinearLayout>
+</RelativeLayout>
