@@ -1,10 +1,9 @@
-package com.example.diplamajava;
+package com.example.diplamajava.ui;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -12,50 +11,39 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.diplamajava.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import android.content.Context;
 
-public class MainActivity extends AppCompatActivity {
-
+public class RegisterPage extends AppCompatActivity {
     TextInputEditText editTextEmail, editTextPassword;
-    Button signIn;
-    TextView signUp;
+    Button signUp;
+    TextView signIn;
     FirebaseAuth firebaseAuth=FirebaseAuth.getInstance();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
+        setContentView(R.layout.activity_register_page);
 
         editTextEmail=findViewById(R.id.email);
         editTextPassword=findViewById(R.id.password);
         signIn=findViewById(R.id.sign_in);
         signUp=findViewById(R.id.sign_up);
 
-        SharedPreferences prefs = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-        boolean isSignedIn = prefs.getBoolean("isSignedIn", false);
-
-        if (isSignedIn) {
-            Intent intent=new Intent(MainActivity.this,HomePage.class);
-            startActivity(intent);
-            finish();
-        }
-
-        signUp.setOnClickListener(new View.OnClickListener() {
+        signIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this,RegisterPage.class);
+                Intent intent = new Intent(RegisterPage.this,MainActivity.class);
                 startActivity(intent);
                 finish();
             }
         });
-
-        signIn.setOnClickListener(new View.OnClickListener() {
+        signUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String email,password;
@@ -63,29 +51,24 @@ public class MainActivity extends AppCompatActivity {
                 password=String.valueOf(editTextPassword.getText());
 
                 if(TextUtils.isEmpty(email)){
-                    Toast.makeText(MainActivity.this, "Enter Email", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterPage.this, "Enter Email", Toast.LENGTH_SHORT).show();
                     return;
                 } if(TextUtils.isEmpty(password)){
-                    Toast.makeText(MainActivity.this, "Enter Password", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterPage.this, "Enter Password", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                firebaseAuth.signInWithEmailAndPassword(email, password)
+                firebaseAuth.createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if(task.isSuccessful()){
-                                    Toast.makeText(MainActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
-                                    // Сохраняю состояние входа, чтобы не входить каждый раз
-                                    SharedPreferences prefs = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-                                    SharedPreferences.Editor editor = prefs.edit();
-                                    editor.putBoolean("isSignedIn", true);
-                                    editor.apply();
-                                    Intent intent=new Intent(MainActivity.this,HomePage.class);
+                                    Toast.makeText(RegisterPage.this, "Registration Successfully", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(RegisterPage.this,MainActivity.class);
                                     startActivity(intent);
                                     finish();
                                 }
-                                else{
-                                    Toast.makeText(MainActivity.this, "Authentication Failed", Toast.LENGTH_SHORT).show();
+                                else {
+                                    Toast.makeText(RegisterPage.this, "Authentication Failed", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });

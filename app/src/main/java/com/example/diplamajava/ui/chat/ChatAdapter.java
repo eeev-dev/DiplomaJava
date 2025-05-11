@@ -1,4 +1,4 @@
-package com.example.diplamajava.chat;
+package com.example.diplamajava.ui.chat;
 
 import android.content.Context;
 import android.view.Gravity;
@@ -12,15 +12,16 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.diplamajava.R;
+import com.example.diplamajava.data.openai.ChatMessage;
 
 import java.util.List;
 
 public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MessageViewHolder> {
 
-    private List<ChatMessage> messageList;
+    private List<Message> messageList;
     private Context context;
 
-    public ChatAdapter(Context context, List<ChatMessage> messageList) {
+    public ChatAdapter(Context context, List<Message> messageList) {
         this.context = context;
         this.messageList = messageList;
     }
@@ -45,7 +46,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MessageViewHol
 
     @Override
     public void onBindViewHolder(@NonNull MessageViewHolder holder, int position) {
-        ChatMessage message = messageList.get(position);
+        Message message = messageList.get(position);
         holder.messageTextView.setText(message.getText());
 
         if (message.isUser()) {

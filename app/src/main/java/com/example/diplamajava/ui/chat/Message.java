@@ -1,10 +1,10 @@
-package com.example.diplamajava.chat;
+package com.example.diplamajava.ui.chat;
 
-public class ChatMessage {
+public class Message {
     private String text;
     private boolean isUser;
 
-    public ChatMessage(String text, boolean isUser) {
+    public Message(String text, boolean isUser) {
         this.text = text;
         this.isUser = isUser;
     }
@@ -17,4 +17,5 @@ public class ChatMessage {
         return isUser;
     }
 }
+
 

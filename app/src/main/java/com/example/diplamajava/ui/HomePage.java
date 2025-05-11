@@ -1,4 +1,4 @@
-package com.example.diplamajava;
+package com.example.diplamajava.ui;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,7 +9,8 @@ import com.example.diplamajava.R;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-import com.example.diplamajava.chat.ChatFragment;
+import com.example.diplamajava.ui.chat.ChatFragment;
+import com.example.diplamajava.ui.test.TestFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 

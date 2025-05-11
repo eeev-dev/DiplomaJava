@@ -7,7 +7,7 @@
     android:background="@drawable/fon1"
     android:padding="40dp"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".ui.MainActivity">
 
 
 
