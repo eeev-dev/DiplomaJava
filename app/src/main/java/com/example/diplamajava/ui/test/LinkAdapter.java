@@ -1,5 +1,7 @@
-package com.example.diplamajava.ui.test.adapters;
+package com.example.diplamajava.ui.test;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -8,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.diplamajava.R;
 
@@ -42,7 +45,6 @@ public class LinkAdapter extends BaseAdapter {
 
     static class ViewHolder {
         TextView title;
-        TextView link;
     }
 
     @Override
@@ -53,7 +55,6 @@ public class LinkAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.item_link, parent, false);
             holder = new ViewHolder();
             holder.title = convertView.findViewById(R.id.titleTextView);
-            holder.link = convertView.findViewById(R.id.linkTextView);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -61,13 +62,24 @@ public class LinkAdapter extends BaseAdapter {
 
         String[] test = testList.get(position);
         holder.title.setText(test[0]);
-        holder.link.setText(test[1]);
 
-        holder.link.setOnClickListener(v -> {
+        holder.title.setOnClickListener(v -> {
             String url = test[1];
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
             context.startActivity(intent);
         });
+
+        holder.title.setOnLongClickListener(v -> {
+            String url = test[1];
+
+            ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+            ClipData clip = ClipData.newPlainText("URL", url);
+            clipboard.setPrimaryClip(clip);
+
+            Toast.makeText(context, "Ссылка скопирована", Toast.LENGTH_SHORT).show();
+            return true; // важно вернуть true, чтобы событие long click не продолжалось как обычный click
+        });
+
 
         return convertView;
     }

@@ -6,21 +6,11 @@
 
     <TextView
         android:id="@+id/titleTextView"
-        android:text="Название теста"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingEnd="12dp"
-        android:paddingStart="12dp"
-        android:paddingBottom="12dp"
-        android:textColor="#000000"
-        android:textSize="16sp" />
-
-    <TextView
-        android:id="@+id/linkTextView"
         android:text="Ссылка"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_message_bubble"
+        android:layout_marginBottom="6dp"
         android:padding="12dp"
         android:textColor="#000000"
         android:textSize="16sp" />

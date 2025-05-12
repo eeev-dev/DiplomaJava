@@ -1,69 +1,154 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingStart="12dp"
-    android:paddingEnd="12dp"
-    android:paddingTop="12dp"
-    >
-
-    <Button
-        android:id="@+id/openLinkList"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Дополнительно"
-        android:textSize="16sp"
-        android:background="@color/blue"
-        />
-
-    <!-- Список с текстами -->
-    <ListView
-        android:id="@+id/list_view_texts"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="12dp"/>
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="12dp"
+    android:gravity="center">
 
     <LinearLayout
-        android:id="@+id/results"
+        android:id="@+id/links"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:orientation="vertical"
         android:visibility="gone">
 
-        <TextView
-            android:id="@+id/first_place"
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/openLinkList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Дополнительно"
+            android:textColor="#144F97"
+            android:background="@drawable/round_btn" />
+
+        <!-- Список с текстами -->
+        <ListView
+            android:id="@+id/list_view_texts"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/round_btn"/>
+            android:padding="12dp"
+            android:visibility="gone"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="12dp"
+            android:text="Вам подходят кафедры"
+            android:textAlignment="center"
+            android:textSize="24sp"
+            android:textColor="@color/black"/>
+
+        <TextView
+            android:id="@+id/first_place"
+            android:layout_marginBottom="6dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_message_bubble"
+            android:padding="12dp"
+            android:text="Кафедра 1"
+            android:textSize="24sp"
+            android:textColor="@color/black"/>
 
         <TextView
             android:id="@+id/second_place"
+            android:layout_marginBottom="6dp"
+            android:background="@drawable/bg_message_bubble"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/round_btn"/>
+            android:padding="12dp"
+            android:text="Кафедра 2"
+            android:textSize="24sp"
+            android:textColor="@color/black"/>
 
         <TextView
             android:id="@+id/third_place"
+            android:layout_marginBottom="6dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/round_btn"/>
+            android:background="@drawable/bg_message_bubble"
+            android:padding="12dp"
+            android:textColor="@color/black"
+            android:text="Кафедра 3"
+            android:textSize="24sp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnExit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Пройти тест заново"
+            android:textColor="#144F97"
+            android:background="@drawable/round_btn" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
 
     </LinearLayout>
 
-    <!-- Ресайклер с текстом и двумя RadioButton в каждом элементе -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view_questions"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-    <Button
-        android:id="@+id/btnAssign"
+    <LinearLayout
+        android:id="@+id/question"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Показать результаты"
-        android:textSize="16sp"
-        android:background="@color/blue"
-        />
+        android:layout_gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvProgress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:text="2/4"
+            android:textSize="20sp"
+            android:textColor="@color/blue"/>
+
+        <TextView
+            android:id="@+id/tvQuestion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Вопрос вопрос вопрос"
+            android:textSize="24sp"
+            android:textColor="@color/black"/>
+
+        <RadioGroup
+            android:id="@+id/radio_group_answers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.google.android.material.radiobutton.MaterialRadioButton
+                android:id="@+id/radio_button_yes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Да"
+                android:textColor="@color/black"
+                app:buttonTint="@color/blue" />
+
+            <com.google.android.material.radiobutton.MaterialRadioButton
+                android:id="@+id/radio_button_no"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Нет"
+                android:textColor="@color/black"
+                app:buttonTint="@color/blue" />
+
+        </RadioGroup>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnNext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Дальше"
+            android:textColor="#144F97"
+            android:background="@drawable/round_btn" />
+
+    </LinearLayout>
 
 </LinearLayout>

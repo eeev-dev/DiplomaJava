@@ -5,8 +5,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,12 +12,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.diplamajava.R;
-import com.example.diplamajava.ui.test.adapters.LinkAdapter;
-import com.example.diplamajava.ui.test.adapters.OnAnswerSelectedListener;
-import com.example.diplamajava.ui.test.adapters.TestAdapter;
 import com.example.diplamajava.ui.test.models.Question;
 import com.example.diplamajava.ui.test.models.QuestionData;
 
@@ -29,23 +26,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class TestFragment extends Fragment implements OnAnswerSelectedListener {
-    RecyclerView testRecyclerView;
+public class TestFragment extends Fragment {
     ListView linksView;
-    TextView openLinkList;
-    LinearLayout results;
-    Button showResults;
-    private final List<String> selectedDepartments = new ArrayList<>();
-
-    @Override
-    public void onYesSelected(List<String> departments) {
-        selectedDepartments.addAll(departments);
-    }
-
-    public List<String> getSelectedDepartments() {
-        return selectedDepartments;
-    }
-
+    TextView openLinkList, questionText, progress;
+    TextView first_place, second_place, third_place;
+    Button btnAssign, btnBack;
+    RadioGroup radioGroup;
+    int position = 0;
+    LinearLayout questionLayout, resultsLayout;
+    List<String> departments = new ArrayList<>();
+    List<Question> questions = QuestionData.getQuestions();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -55,9 +45,22 @@ public class TestFragment extends Fragment implements OnAnswerSelectedListener {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        testRecyclerView = view.findViewById(R.id.recycler_view_questions);
         linksView = view.findViewById(R.id.list_view_texts);
-        showResults = view.findViewById(R.id.btnAssign);
+        btnAssign = view.findViewById(R.id.btnNext);
+        questionText = view.findViewById(R.id.tvQuestion);
+        radioGroup = view.findViewById(R.id.radio_group_answers);
+        first_place = view.findViewById(R.id.first_place);
+        second_place = view.findViewById(R.id.second_place);
+        third_place = view.findViewById(R.id.third_place);
+        questionLayout = view.findViewById(R.id.question);
+        resultsLayout = view.findViewById(R.id.links);
+        btnBack = view.findViewById(R.id.btnExit);
+        progress = view.findViewById(R.id.tvProgress);
+
+        radioGroup.setOnCheckedChangeListener(null);
+        radioGroup.clearCheck();
+
+        // Ссылки
 
         List<String[]> tests = new ArrayList<>(Arrays.asList(
                 new String[]{"Тест на личность", "https://proforientator.ru/profline/test/e60f99de247544e88ea0ad7824b7f1ef"},
@@ -66,8 +69,8 @@ public class TestFragment extends Fragment implements OnAnswerSelectedListener {
         ));
 
         LinkAdapter linkAdapter = new LinkAdapter(requireContext(), tests);
-
         linksView.setVisibility(View.GONE);
+        linksView.setAdapter(linkAdapter);
 
         openLinkList = view.findViewById(R.id.openLinkList);
 
@@ -79,25 +82,52 @@ public class TestFragment extends Fragment implements OnAnswerSelectedListener {
             }
         });
 
-        linksView.setAdapter(linkAdapter);
+        // Тест
 
-        List<Question> questions = QuestionData.getQuestions();
-        TestAdapter testAdapter = new TestAdapter(requireContext(), questions, this);
+        progress.setText((position + 1) + "/" + questions.size());
+        questionText.setText(questions.get(0).getQuestion());
 
-        testRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-        testRecyclerView.setAdapter(testAdapter);
+        btnAssign.setOnClickListener(v -> {
+            position++;
+            if (position >= questions.size()) {
+                List<String> results = countResults();
 
-        results = view.findViewById(R.id.results);
+                first_place.setText(results.get(0));
+                second_place.setText(results.get(1));
+                third_place.setText(results.get(2));
 
-        showResults.setOnClickListener(v -> {
-            // Проверка, что на все вопросы есть ответы
+                questionLayout.setVisibility(View.GONE);
+                resultsLayout.setVisibility(View.VISIBLE);
+            } else {
+                if (radioGroup.getCheckedRadioButtonId() != -1) {
+                    Question question = questions.get(position);
+                    questionText.setText(question.getQuestion());
+                    radioGroup.clearCheck();
+                    progress.setText((position + 1) + "/" + questions.size());
+                }
+            }
+        });
 
-            results.setVisibility(View.VISIBLE);
+        radioGroup.setOnCheckedChangeListener((group, checkedId) -> {
+            if (checkedId == R.id.radio_button_yes) {
+                departments.addAll(questions.get(position).getDepartments());
+            } else if (checkedId == R.id.radio_button_no) {
+                // пользователь выбрал "Нет"
+            }
+        });
+
+        btnBack.setOnClickListener(v -> {
+            position = 0;
+            questionText.setText(questions.get(position).getQuestion());
+            radioGroup.clearCheck();
+            departments.clear();
+            questionLayout.setVisibility(View.VISIBLE);
+            resultsLayout.setVisibility(View.GONE);
         });
     }
 
     public List<String> countResults() {
-        List<String> results = getSelectedDepartments();
+        List<String> results = departments;
 
         // Подсчёт вхождений
         Map<String, Integer> frequencyMap = new HashMap<>();
